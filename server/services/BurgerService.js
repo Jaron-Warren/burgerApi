@@ -1,21 +1,21 @@
 import { fakeDb } from '../db/fakeDb'
 import { BadRequest } from '../utils/Errors'
 
-class KnightsService {
+class BurgerService {
   getAll() {
-    return fakeDb.knights
+    return fakeDb.burger
   }
 
   getById(id) {
-    const knight = fakeDb.knights.find(k => k.id.toString() === id)
-    if (!knight) {
-      throw new BadRequest('Invalid Knight ID')
+    const burger = fakeDb.burger.find(b => b.id.toString() === id)
+    if (!burger) {
+      throw new BadRequest('Invalid burger ID')
     }
-    return knight
+    return burger
   }
 
   create(body) {
-    fakeDb.knights.push(body)
+    fakeDb.burger.push(body)
     return body
   }
 
@@ -23,7 +23,7 @@ class KnightsService {
     let old = this.getById(body.id)
     old = { ...old, ...body }
     this.delete(old.id)
-    fakeDb.knights.push(old)
+    fakeDb.burger.push(old)
     return old
     // for (const key in body) {
     //   old[key] = body[key]
@@ -31,12 +31,12 @@ class KnightsService {
   }
 
   delete(id) {
-    const index = fakeDb.knights.findIndex(k => k.id.toString() === id)
+    const index = fakeDb.burger.findIndex(b => b.id === id)
     if (index > -1) {
       throw new BadRequest('Invalid Id')
     }
-    fakeDb.knights.splice(index, 1)
+    fakeDb.burger.splice(index, 1)
   }
 }
 
-export const knightsService = new KnightsService()
+export const burgerService = new BurgerService()
